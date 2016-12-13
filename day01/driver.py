@@ -21,17 +21,21 @@ class Robot():
         self._move(number)
 
     def _turn(self, direction):
-        self.facing+=self.turning[direction]
-        self.facing = self.facing % 4 
+        self.facing = (self.facing + self.turning[direction]) % 4
 
     def _move(self, number):
-        self.loc = tuple(map(operator.add, self.loc , tuple([z * number for z in self.movement[self.compass[self.facing]]])))
+        for _ in range(number):
+            self.loc = tuple(map(operator.add, self.loc , self.movement[self.compass[self.facing]]))
+            if self.loc in self.visitedLocs and not self.firstLoc:
+                self.firstLoc = self.loc
+            else:
+                self.visitedLocs[self.loc] = True
 
     def distance(self):
         return abs(self.loc[0]) + abs(self.loc[1])
 
     def distanceRevisit(self):
-        return 4
+        return abs(self.firstLoc[0]) + abs(self.firstLoc[1])
 
 class MyTest(unittest.TestCase):
     def test_1(self):
@@ -47,12 +51,13 @@ class MyTest(unittest.TestCase):
         self.assertEqual(rob.distance(), 12)
 
     def test_4(self):
-        robt = Robot("R8, R4, R4, R8")
+        rob = Robot("R8, R4, R4, R8")
         self.assertEquals(rob.distanceRevisit(), 4)
 
 if __name__ == '__main__':
     rob = Robot("R3, R1, R4, L4, R3, R1, R1, L3, L5, L5, L3, R1, R4, L2, L1, R3, L3, R2, R1, R1, L5, L2, L1, R2, L4, R1, L2, L4, R2, R2, L2, L4, L3, R1, R4, R3, L1, R1, L5, R4, L2, R185, L2, R4, R49, L3, L4, R5, R1, R1, L1, L1, R2, L1, L4, R4, R5, R4, L3, L5, R1, R71, L1, R1, R186, L5, L2, R5, R4, R1, L5, L2, R3, R2, R5, R5, R4, R1, R4, R2, L1, R4, L1, L4, L5, L4, R4, R5, R1, L2, L4, L1, L5, L3, L5, R2, L5, R4, L4, R3, R3, R1, R4, L1, L2, R2, L1, R4, R2, R2, R5, R2, R5, L1, R1, L4, R5, R4, R2, R4, L5, R3, R2, R5, R3, L3, L5, L4, L3, L2, L2, R3, R2, L1, L1, L5, R1, L3, R3, R4, R5, L3, L5, R1, L3, L5, L5, L2, R1, L3, L1, L3, R4, L1, R3, L2, L2, R3, R3, R4, R4, R1, L4, R1, L5")
     print rob.distance()
+    print rob.distanceRevisit()
     unittest.main()
 
 
