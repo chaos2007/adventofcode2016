@@ -20,19 +20,15 @@ class RepetitionEncoding {
     }
     return ret_val 
   }
-  def addEntropy(s: String) {
-    for( i <- s.indices) {
-    
+  def addEntropy(str: String) {
+    for( i <- str.indices) {
       if( entropy.size <= i ) {
         entropy += Map()
       }
-      var x = entropy(i)
-      if( !x.contains(s(i)) ) {
-        x(s(i)) = 1
-      } else {
-        x(s(i)) = x(s(i)) + 1
-      }
-      entropy(i) = x
+
+      var ent = entropy(i)
+      if( ent.contains(str(i)) ) ent(str(i)) += 1 else ent(str(i)) = 1
+      entropy(i) = ent
     }
   }
   def read_from_file(s: String) {
