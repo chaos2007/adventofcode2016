@@ -15,10 +15,36 @@ class RepetitionEncodingTests extends FunSuite with BeforeAndAfter {
     assert(encoding.getCurrentMessage == "")
   }
 
-  // mark that you want a test here in the future
-  test ("test input text from example - part 1") (pending)
-  test ("test input text from example - part 2") (pending)
-  test ("test input text from problem - part 1") (pending)
-  test ("test input text from problem - part 2") (pending)
+  test("single entropy is default password.") {
+    encoding.addEntropy("eedadn")
+    assert(encoding.getCurrentMessage == "eedadn")
+  }
+
+  test("multiple entropy is chooses max.") {
+    encoding.addEntropy("eedadn")
+    encoding.addEntropy("zzzzzz")
+    encoding.addEntropy("zzzzzz")
+    assert(encoding.getCurrentMessage == "zzzzzz")
+  }
+
+  test ("test input text from example - part 1") {
+    encoding.read_from_file("example_1.txt")
+    assert(encoding.getCurrentMessage == "easter")
+  }
+
+  test ("test input text from example - part 2") {
+    encoding.read_from_file("part_1.txt")
+    assert(encoding.getCurrentMessage == "qrqlznrl")
+  }
+
+  test ("test input text from problem - part 1") {
+    encoding.read_from_file("example_1.txt")
+    assert(encoding.getCurrentMessage_reverse == "advent")
+  }
+
+  test ("test input text from problem - part 2") {
+    encoding.read_from_file("part_1.txt")
+    assert(encoding.getCurrentMessage_reverse == "kgzdfaon")
+  }
 
 }
