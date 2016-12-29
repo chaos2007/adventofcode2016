@@ -1,4 +1,6 @@
 SOURCES = IPv7Decoder.cpp 
+FLAGS = -std=c++11
+GCC = g++
 
 all: test
 
@@ -6,5 +8,5 @@ test: compile
 	./a.out
 
 compile:
-	g++ $(SOURCES) -lgtest -lgtest_main
+	$(GCC) $(SOURCES) -lgtest -lgtest_main $(FLAGS)
 
