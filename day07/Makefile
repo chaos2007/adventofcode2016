@@ -1,5 +1,5 @@
-SOURCES = IPv7Decoder.cpp 
-FLAGS = -std=c++11
+SOURCES = IPv7Decoder.cpp Test_IPv7Decoder.cpp
+FLAGS = -std=c++11 -g
 GCC = g++
 
 all: test

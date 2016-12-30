@@ -32,3 +32,5 @@ project/plugins/project/
 .ensime
 
 # End of https://www.gitignore.io/api/sbt,scala
+
+a.out
